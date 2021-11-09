@@ -123,6 +123,8 @@ namespace q_limits
                         {
                             possiblechars += "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?~`";
                         }
+                        
+                        // TODO: Generate every possible combination with a progressbar and add it to 'passwords'
                     }
                     catch (Exception)
                     {
@@ -146,7 +148,7 @@ namespace q_limits
             bool func(IModule x) => x.ID.ToLower() == mode.ToLower();
 
             if (!KnownModules.Any(func)) // Ignore case
-                throw new Exception($"Unknown module '{mode.ToLower()}'");
+                throw new Exception($"Unknown module '{mode.ToLower()}'"); // TODO: Write output instead
 
             IModule loadingModule = KnownModules.First(func);
 

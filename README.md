@@ -20,3 +20,11 @@ The part in square brackets is the ID used to reference it
 q-limits [-m protcol] [-d destination] [-l login] [-L login_file] [-p password] [-P password_file] [-t max_thread_count] [-n [proxy_username]:[proxy_password]] [-s success_criteria] [-f fail_criteria]
 ```
 
+### Change Log
+
+- **[Version 2.0.3]** Added max_thread_count parameter
+- **[Version 2.0.2]** Added HTTP Form and FTP protocols
+- **[Version 2.0.2]** Cancel Key Press shows statistics before exiting
+
+### To Do
+

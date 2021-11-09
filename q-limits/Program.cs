@@ -10,12 +10,13 @@ namespace q_limits
     class Program
     {
         static DateTime startTime;
-        static string Version = "2.0.0";
+        static string Version = "2.0.3"; // TODO: Remember to update the version all the time
         static void Main(string[] args)
         {
             Console.CancelKeyPress += (_, _) =>
             {
                 End();
+                // TODO: Make the time bar appear after progressbar somehow
             };
 
                 startTime = DateTime.Now;
@@ -33,23 +34,7 @@ namespace q_limits
             }
             else if (argD.ContainsKey("h"))
             {
-                AnsiConsole.MarkupLine("[blue underline]Help Menu[/]");
-                AnsiConsole.MarkupLine("[blue]Examples[/]");
-                Console.WriteLine("q-limits -m ssh -d 127.0.0.1 -l admin -P wordlist.txt");
-                Console.WriteLine("q-limits -m http-get-form -d 192.168.1.45:7312 -L usernames.txt -x 4:4:1 -s Welcome -f Denied");
-                Console.WriteLine("q-limits -m proxy -d https://www.google.com -l user -p password");
-                AnsiConsole.MarkupLine("[blue]Parameters[/]");
-                Console.WriteLine("-h                           Shows help");
-                Console.WriteLine("-H                           Shows full help");
-                Console.WriteLine("-m <mode>                    Sets attack mode");
-                Console.WriteLine("-d <destination>             Sets destination");
-                Console.WriteLine("-l <login>                   Login (username) to try");
-                Console.WriteLine("-L <file>                    File of logins to try");
-                Console.WriteLine("-p <password>                Password to try");
-                Console.WriteLine("-P <file>                    File of password to try");
-                Console.WriteLine("-x <min>:<max>:<1|a|A|!>     Password generation from execute");
-                Console.WriteLine("-n <login>:<password>        Proxy credentials");
-                Console.WriteLine("-t <threads>                 Amount of threads");
+                // TODO: Write help menu (base of README.md)
             }
             else if (argD.ContainsKey("m") && argD.ContainsKey("d"))
             {
