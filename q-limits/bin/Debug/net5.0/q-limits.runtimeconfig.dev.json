@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\melod\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\melod\\.nuget\\packages"
-    ]
-  }
-}
