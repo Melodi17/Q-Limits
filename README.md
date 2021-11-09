@@ -6,9 +6,9 @@ The perfect tool for breaking limits, this is a login-cracking utility based off
 
 The part in square brackets is the ID used to reference it
 
-- HTTP Basic Authentication [`http-get`]
-- HTTP Form [`http-get-form`]
-- HTTP Proxy [`http-proxy`]
+- HTTP(S) Basic Authentication [`http-get`]
+- HTTP(S) Form [`http-get-form`]
+- HTTP(S) Proxy [`http-proxy`]
 - FTP [`ftp`]
 - SSH [`ssh`]
 - SHA256 Hash [`sha256-hash`]
@@ -22,9 +22,17 @@ q-limits [-m protcol] [-d destination] [-l login] [-L login_file] [-p password] 
 
 ### Change Log
 
+- **Version 2.0.4]** Started working on Telnet module
 - **[Version 2.0.3]** Added max_thread_count parameter
 - **[Version 2.0.2]** Added HTTP Form and FTP protocols
 - **[Version 2.0.2]** Cancel Key Press shows statistics before exiting
 
 ### To Do
 
+- [ ] Get password generation parameter (-x) working
+- [ ] Write output instead of throwing an error when the specified module is not found
+- [ ] Move the statistics bar appear after progress bar when the application receives Cancel Key Press
+- [ ] Write help menu
+- [ ] Write help text for each module
+- [ ] Add POP3 protocol
+- [ ] 

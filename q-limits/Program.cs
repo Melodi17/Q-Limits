@@ -10,13 +10,13 @@ namespace q_limits
     class Program
     {
         static DateTime startTime;
-        static string Version = "2.0.3"; // TODO: Remember to update the version all the time
+        static string Version = "2.0.4"; // TODO: Remember to update the version all the time
         static void Main(string[] args)
         {
             Console.CancelKeyPress += (_, _) =>
             {
-                End();
-                // TODO: Make the time bar appear after progressbar somehow
+                ShowStatistics();
+                // TODO: Make the statistics bar appear after progressbar somehow
             };
 
                 startTime = DateTime.Now;
@@ -51,11 +51,11 @@ namespace q_limits
                         new SpinnerColumn(),            // Spinner
                     }).Start(ctx => ModuleService.FindAssessLoadModule(ctx, argD));
 
-                End();
+                ShowStatistics();
             }
         }
 
-        static void End()
+        static void ShowStatistics()
         {
             DateTime finishTime = DateTime.Now;
 
