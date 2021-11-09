@@ -1,0 +1,269 @@
+{
+  "version": 3,
+  "targets": {
+    "net5.0": {
+      "Melodi.IO/1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Melodi.IO.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Melodi.IO.dll": {}
+        }
+      },
+      "Melodi.Networking/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Melodi.Networking.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Melodi.Networking.dll": {}
+        }
+      },
+      "Spectre.Console/0.42.0": {
+        "type": "package",
+        "dependencies": {
+          "Wcwidth": "0.2.0"
+        },
+        "compile": {
+          "lib/net5.0/Spectre.Console.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Spectre.Console.dll": {}
+        }
+      },
+      "SSH.NET/2020.0.1": {
+        "type": "package",
+        "dependencies": {
+          "SshNet.Security.Cryptography": "[1.3.0]"
+        },
+        "compile": {
+          "lib/netstandard2.0/Renci.SshNet.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Renci.SshNet.dll": {}
+        }
+      },
+      "SshNet.Security.Cryptography/1.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/SshNet.Security.Cryptography.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/SshNet.Security.Cryptography.dll": {}
+        }
+      },
+      "Wcwidth/0.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Wcwidth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Wcwidth.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Melodi.IO/1.0.3": {
+      "sha512": "XEaTBR8UJgLq7e+beIgzjRgzDY77HUsCKRf3GQCC4poXlRq0K1h0QBKDmKHReTJ66abDI7wyFM7qFrgr5CvnSg==",
+      "type": "package",
+      "path": "melodi.io/1.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net5.0/Melodi.IO.dll",
+        "melodi.io.1.0.3.nupkg.sha512",
+        "melodi.io.nuspec"
+      ]
+    },
+    "Melodi.Networking/1.0.4": {
+      "sha512": "vV39Huo6gDKka5O/KhsMGiHUAORxXhw8uMvk1gb/13CTlpnsdglRgeR2e1/i0Si4dMZUqJKCRFV/wrWRoDa1hg==",
+      "type": "package",
+      "path": "melodi.networking/1.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net5.0/Melodi.Networking.dll",
+        "melodi.networking.1.0.4.nupkg.sha512",
+        "melodi.networking.nuspec"
+      ]
+    },
+    "Spectre.Console/0.42.0": {
+      "sha512": "S7W1pHhcDOvzPQE4TJtQvkkF1/zflCvF5E7rYgHJXFVT/rnPZE8o7GmHJbckY7LUUAZ1OllUJ3E5BxBzCVg+wQ==",
+      "type": "package",
+      "path": "spectre.console/0.42.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net5.0/Spectre.Console.dll",
+        "lib/net5.0/Spectre.Console.xml",
+        "lib/netstandard2.0/Spectre.Console.dll",
+        "lib/netstandard2.0/Spectre.Console.xml",
+        "small-logo.png",
+        "spectre.console.0.42.0.nupkg.sha512",
+        "spectre.console.nuspec"
+      ]
+    },
+    "SSH.NET/2020.0.1": {
+      "sha512": "DhVeQ8JzoS8Z25VwZfQ/9HEjTO8eWs4ldsMkcMsUFK7TFc8GnpxBeRBj3X8mc5+rwvzZNNmLDm08a8TpPZNF/g==",
+      "type": "package",
+      "path": "ssh.net/2020.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/Renci.SshNet.dll",
+        "lib/net35/Renci.SshNet.xml",
+        "lib/net40/Renci.SshNet.dll",
+        "lib/net40/Renci.SshNet.xml",
+        "lib/netstandard1.3/Renci.SshNet.dll",
+        "lib/netstandard1.3/Renci.SshNet.xml",
+        "lib/netstandard2.0/Renci.SshNet.dll",
+        "lib/netstandard2.0/Renci.SshNet.xml",
+        "lib/sl4/Renci.SshNet.dll",
+        "lib/sl4/Renci.SshNet.xml",
+        "lib/sl5/Renci.SshNet.dll",
+        "lib/sl5/Renci.SshNet.xml",
+        "lib/uap10/Renci.SshNet.dll",
+        "lib/uap10/Renci.SshNet.xml",
+        "lib/wp71/Renci.SshNet.dll",
+        "lib/wp71/Renci.SshNet.xml",
+        "lib/wp8/Renci.SshNet.dll",
+        "lib/wp8/Renci.SshNet.xml",
+        "ssh.net.2020.0.1.nupkg.sha512",
+        "ssh.net.nuspec"
+      ]
+    },
+    "SshNet.Security.Cryptography/1.3.0": {
+      "sha512": "5pBIXRjcSO/amY8WztpmNOhaaCNHY/B6CcYDI7FSTgqSyo/ZUojlLiKcsl+YGbxQuLX439qIkMfP0PHqxqJi/Q==",
+      "type": "package",
+      "path": "sshnet.security.cryptography/1.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/SshNet.Security.Cryptography.dll",
+        "lib/net20/SshNet.Security.Cryptography.xml",
+        "lib/net40/SshNet.Security.Cryptography.dll",
+        "lib/net40/SshNet.Security.Cryptography.xml",
+        "lib/net45/SshNet.Security.Cryptography.dll",
+        "lib/net45/SshNet.Security.Cryptography.xml",
+        "lib/netstandard1.0/SshNet.Security.Cryptography.dll",
+        "lib/netstandard1.0/SshNet.Security.Cryptography.xml",
+        "lib/netstandard1.3/SshNet.Security.Cryptography.dll",
+        "lib/netstandard1.3/SshNet.Security.Cryptography.xml",
+        "lib/netstandard2.0/SshNet.Security.Cryptography.dll",
+        "lib/netstandard2.0/SshNet.Security.Cryptography.xml",
+        "lib/portable-net45+win8+wpa81/SshNet.Security.Cryptography.dll",
+        "lib/portable-net45+win8+wpa81/SshNet.Security.Cryptography.xml",
+        "lib/sl4/SshNet.Security.Cryptography.dll",
+        "lib/sl4/SshNet.Security.Cryptography.xml",
+        "lib/sl5/SshNet.Security.Cryptography.dll",
+        "lib/sl5/SshNet.Security.Cryptography.xml",
+        "lib/uap10.0/SshNet.Security.Cryptography.dll",
+        "lib/uap10.0/SshNet.Security.Cryptography.xml",
+        "lib/wp71/SshNet.Security.Cryptography.dll",
+        "lib/wp71/SshNet.Security.Cryptography.xml",
+        "lib/wp8/SshNet.Security.Cryptography.dll",
+        "lib/wp8/SshNet.Security.Cryptography.xml",
+        "sshnet.security.cryptography.1.3.0.nupkg.sha512",
+        "sshnet.security.cryptography.nuspec"
+      ]
+    },
+    "Wcwidth/0.2.0": {
+      "sha512": "H7no2W0vuLJTvSPanlrijtG3UdJNVoeWBOp2a5dJFVa2tqSQuP5GfbJw1xAtPG9agRW310nFTUUsyPz5tuVIxw==",
+      "type": "package",
+      "path": "wcwidth/0.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Wcwidth.dll",
+        "lib/netstandard2.0/Wcwidth.xml",
+        "wcwidth.0.2.0.nupkg.sha512",
+        "wcwidth.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net5.0": [
+      "Melodi.IO >= 1.0.3",
+      "Melodi.Networking >= 1.0.4",
+      "SSH.NET >= 2020.0.1",
+      "Spectre.Console >= 0.42.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\melod\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\melod\\source\\repos\\q-limits\\q-limits\\q-limits.csproj",
+      "projectName": "q-limits",
+      "projectPath": "C:\\Users\\melod\\source\\repos\\q-limits\\q-limits\\q-limits.csproj",
+      "packagesPath": "C:\\Users\\melod\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\melod\\source\\repos\\q-limits\\q-limits\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\melod\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net5.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net5.0": {
+        "targetAlias": "net5.0",
+        "dependencies": {
+          "Melodi.IO": {
+            "target": "Package",
+            "version": "[1.0.3, )"
+          },
+          "Melodi.Networking": {
+            "target": "Package",
+            "version": "[1.0.4, )"
+          },
+          "SSH.NET": {
+            "target": "Package",
+            "version": "[2020.0.1, )"
+          },
+          "Spectre.Console": {
+            "target": "Package",
+            "version": "[0.42.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

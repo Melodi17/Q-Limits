@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "q-limits", "q-limits\q-limits.csproj", "{3C9B5A95-9A4B-482E-B311-E66A76FEB008}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C9B5A95-9A4B-482E-B311-E66A76FEB008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9B5A95-9A4B-482E-B311-E66A76FEB008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9B5A95-9A4B-482E-B311-E66A76FEB008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9B5A95-9A4B-482E-B311-E66A76FEB008}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E653C79-6AFA-4831-86EC-3AF81039A6FF}
+	EndGlobalSection
+EndGlobal

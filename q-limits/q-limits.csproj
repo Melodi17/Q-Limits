@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>q_limits</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Melodi.IO" Version="1.0.3" />
+    <PackageReference Include="Melodi.Networking" Version="1.0.4" />
+    <PackageReference Include="Spectre.Console" Version="0.42.0" />
+    <PackageReference Include="SSH.NET" Version="2020.0.1" />
+  </ItemGroup>
+
+</Project>
