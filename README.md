@@ -17,8 +17,45 @@ The part in square brackets is the ID used to reference it
 ### Usage
 
 ```shell
-q-limits [-m protcol] [-d destination] [-l login] [-L login_file] [-p password] [-P password_file] [-t max_thread_count] [-n [proxy_username]:[proxy_password]] [-s success_criteria] [-f fail_criteria]
+q-limits [-m module] [-d destination] [-l login] [-L login_file] [-p password] [-P password_file] [-t max_thread_count] [-n [proxy_username]:[proxy_password]] [-s success_criteria] [-f fail_criteria]
 ```
+####  Parameter Help
+
+**-m *module***
+
+Module/protocol (-m) is used to contact specified destination and is required unless '-h' or '-H' parameters are given. The '*module*' parameter is a string and must be a known module's ID, list is shown above.
+
+**-d *destination***
+
+Destination/Target (-m) is used to set the device that it targets during execution and is required unless '-h' or '-H' parameters are given. The '*destination*' parameter is a string and is an IPAddress or Hostname.
+
+**-l *login***
+
+Login/Username (-l) is used to append an item to a list of usernames to try. The '*login*' parameter is a string.
+
+**-L *login_file***
+
+Login file/Username file (-L) is used to append the file content to the list of usernames to try. The '*login_file*' parameter is a string, and must be a valid file path.
+
+**-p *password***
+
+Password/Key (-p) is used to append an item to a list of passwords to try. The '*password*' parameter is a string.
+
+**-P *password_file***
+
+Password file/Key file (-P) is used to append the file content to the list of passwords to try. The '*password_file*' parameter is a string, and must be a valid file path.
+
+**-t *max_thread_count***
+
+Max thread count/Thread count (-t) is used to limit the amount of threads the program can use for breaking the limits. When the parameter is not included the default value will be set to 100. The '*max_thread_count*' parameter is a integer.
+
+**-n *proxy_username*:*proxy_password***
+
+Proxy authentication (-n) is used to set a proxy that certain protocols require if you are on a network and are requiring proxy authentication. It is only required if proxy authentication is necessary. The '*proxy_username*' parameter is a string and should be the username credentials for the proxy. The '*proxy_password*' parameter is a string and should be the password credentials for the proxy.
+
+#### Examples
+
+
 
 ### Change Log
 
