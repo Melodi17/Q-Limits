@@ -34,7 +34,7 @@ namespace q_limits
             }
             else if (argD.ContainsKey("h"))
             {
-                // TODO: Write help menu (base of README.md)
+                // TODO: Write help menu (base off README.md)
             }
             else if (argD.ContainsKey("m") && argD.ContainsKey("d"))
             {
@@ -45,13 +45,17 @@ namespace q_limits
                     .Columns(new ProgressColumn[]
                     {
                         new TaskDescriptionColumn(),    // Task description
-                        new ProgressBarColumn() {CompletedStyle = new(Color.Orange1)},        // Progress bar
+                        new ProgressBarColumn {CompletedStyle = new(Color.Orange1)},        // Progress bar
                         new PercentageColumn(),         // Percentage
                         new RemainingTimeColumn(),      // Remaining time
-                        new SpinnerColumn(),            // Spinner
+                        new SpinnerColumn { Style = new(Color.Blue)},            // Spinner
                     }).Start(ctx => ModuleService.FindAssessLoadModule(ctx, argD));
 
                 ShowStatistics();
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[red]Insufficient parameters are supplied, type 'q-limits -h' for help[/]");
             }
         }
 

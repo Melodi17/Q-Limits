@@ -148,7 +148,11 @@ namespace q_limits
             bool func(IModule x) => x.ID.ToLower() == mode.ToLower();
 
             if (!KnownModules.Any(func)) // Ignore case
-                throw new Exception($"Unknown module '{mode.ToLower()}'"); // TODO: Write output instead
+            {
+                //throw new Exception($"Unknown module '{mode.ToLower()}'");
+                AnsiConsole.MarkupLine($"[red]Unknown module '{mode.ToLower()}'[/]");
+                return;
+            }
 
             IModule loadingModule = KnownModules.First(func);
 
