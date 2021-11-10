@@ -10,8 +10,14 @@ namespace q_limits
 {
     class Program
     {
-        static DateTime startTime;
-        static string Version = "2.0.5";
+        static DateTime StartTime { get; }
+        static Version Version { get; }
+
+        static Program()
+        {
+            StartTime = DateTime.Now;
+            Version = typeof(Program).Assembly.GetName().Version;
+        }
 
         static void Main(string[] args)
         {
@@ -28,10 +34,9 @@ namespace q_limits
 
         static void ExecuteEngine(CommandLineOptions options)
         {
-            startTime = DateTime.Now;
             AnsiConsole.MarkupLine($"Q-Limits [[Version [blue]{Version}[/]]]");
             AnsiConsole.MarkupLine("Made by [blue]Melodi[/] and [blue]Github[/]");
-            AnsiConsole.MarkupLine($"Started at [blue]{startTime}[/]");
+            AnsiConsole.MarkupLine($"Started at [blue]{StartTime}[/]");
             AnsiConsole.Write(new Rule().Centered());
 
             Thread.Sleep(250);
@@ -57,7 +62,7 @@ namespace q_limits
             DateTime finishTime = DateTime.Now;
 
             AnsiConsole.Write(new Rule().Centered());
-            AnsiConsole.MarkupLine($"Finished at [blue]{finishTime}[/], took [blue]{finishTime - startTime}[/], found [blue]{ModuleService.KnownSuccessfulCredentials.Count}[/]");
+            AnsiConsole.MarkupLine($"Finished at [blue]{finishTime}[/], took [blue]{finishTime - StartTime}[/], found [blue]{ModuleService.KnownSuccessfulCredentials.Count}[/]");
         }
     }
 }
