@@ -68,7 +68,7 @@ Proxy authentication (-n) is used to set a proxy that certain protocols require 
 
 ### To Do
 
-- [ ] Implement a proper command line parser (https://github.com/commandlineparser/commandline), in order to make the code more reliable and 'clean'. Fixing: https://github.com/Melodi17/Q-Limits/issues/2
+- [ ] **[Top Priority]** Implement a proper command line parser (https://github.com/commandlineparser/commandline), in order to make the code more reliable and 'clean'. Fixing: https://github.com/Melodi17/Q-Limits/issues/2
 - [ ] Get password generation parameter (-x) working
 - [x] Write output instead of throwing an error when the specified module is not found
 - [ ] Move the statistics bar appear after progress bar when the application receives Cancel Key Press
