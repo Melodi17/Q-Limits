@@ -11,7 +11,7 @@ namespace q_limits
     {
         /// <summary>
         /// Executes asynchronously given function on all elements of given enumerable with task count restriction.
-        /// Executor will continue starting new tasks even if one of the tasks throws. If at least one of the tasks throwed exception then <see cref="AggregateException"/> is throwed at the end of the method run.
+        /// Executor will continue starting new tasks even if one of the tasks throws. If at least one of the tasks threw an exception then <see cref="AggregateException"/> is thrown at the end of the method run.
         /// </summary>
         /// <typeparam name="T">Type of elements in enumerable</typeparam>
         /// <param name="maxTaskCount">The maximum task count.</param>
