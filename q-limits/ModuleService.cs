@@ -28,71 +28,47 @@ namespace q_limits
             KnownModules.Add(new FTPModule());
         }
 
-        public static void FindAssessLoadModule(ProgressContext progCtx, Dictionary<string, string> argD)
+        public static void FindAssessLoadModule(ProgressContext progCtx, CommandLineOptions options)
         {
-            // Find destination and mode
-            var argAssessTask = progCtx.AddTask("[gray][[Service]][/] Assessing arguments", true, 10);
-
-            if (!argD.ContainsKey("d"))
-                throw new Exception("Destination (d) parameter was missing");
-
-            string destination = argD["d"];
-
-            if (!argD.ContainsKey("m"))
-                throw new Exception("Mode (m) parameter was missing");
-
-            string mode = argD["m"];
-
-            int thCount = 100;
-            if (argD.ContainsKey("t"))
-            {
-                if (!int.TryParse(argD["t"], out thCount))
-                {
-                    AnsiConsole.MarkupLine("[red]Thread max count (t) parameter was not a number[/]");
-                }
-            }
-
-            argAssessTask.Value = argAssessTask.MaxValue;
-
             // Extract and calculate possibilities
             var credGenTask = progCtx.AddTask("[gray][[Service]][/] Generating credentials", true, 10);
 
             CredentialContext credContext = new();
             List<string> usernames = new();
             List<string> passwords = new();
-
-            if (argD.ContainsKey("l"))
+            
+            if (options.Login != null)
             {
-                usernames.Add(argD["l"]);
+                usernames.Add(options.Login);
             }
-            if (argD.ContainsKey("L"))
+            if (options.LoginFile != null)
             {
-                if (File.Exists(argD["L"]))
+                if (File.Exists(options.LoginFile))
                 {
-                    usernames.AddRange(File.ReadAllLines(argD["L"]));
+                    usernames.AddRange(File.ReadAllLines(options.LoginFile));
                 }
                 else
                 {
-                    AnsiConsole.MarkupLine($"[red]File '{argD["L"]}' was not found[/]");
+                    AnsiConsole.MarkupLine($"[red]File '{options.LoginFile}' was not found[/]");
                 }
             }
-            if (argD.ContainsKey("p"))
+            if (options.Password != null)
             {
-                passwords.Add(argD["p"]);
+                passwords.Add(options.Password);
             }
-            if (argD.ContainsKey("P"))
+            if (options.PasswordFile != null)
             {
-                if (File.Exists(argD["P"]))
+                if (File.Exists(options.PasswordFile))
                 {
-                    string[] flCont = File.ReadAllLines(argD["P"]);
+                    string[] flCont = File.ReadAllLines(options.PasswordFile);
                     passwords.AddRange(flCont);
                 }
                 else
                 {
-                    AnsiConsole.MarkupLine($"[red]File '{argD["P"]}' was not found[/]");
+                    AnsiConsole.MarkupLine($"[red]File '{options.PasswordFile}' was not found[/]");
                 }
             }
-            if (argD.ContainsKey("x"))
+            /*if (false)
             {
                 string[] splt = argD["x"].Split(":");
                 if (splt.Length == 3)
@@ -135,7 +111,7 @@ namespace q_limits
                 {
                     AnsiConsole.MarkupLine("[red]Generation (x) parameter requires 3 chunks such as: '1:3:aA1!'[/]");
                 }
-            } // TODO: Finish dive algorithm
+            }*/ // TODO: Finish dive algorithm
 
             credContext.Usernames = usernames.ToArray();
             credContext.Passwords = passwords.ToArray();
@@ -145,19 +121,18 @@ namespace q_limits
             // Find correct module
             var findModTask = progCtx.AddTask("[gray][[Service]][/] Finding module", true, 10);
 
-            bool func(IModule x) => x.ID.ToLower() == mode.ToLower();
+            bool func(IModule x) => x.ID.ToLower() == options.Module.ToLower();
 
             if (!KnownModules.Any(func)) // Ignore case
             {
-                //throw new Exception($"Unknown module '{mode.ToLower()}'");
-                AnsiConsole.MarkupLine($"[red]Unknown module '{mode.ToLower()}'[/]");
+                AnsiConsole.MarkupLine($"[red]Unknown module '{options.Module.ToLower()}'[/]");
                 return;
             }
 
             IModule loadingModule = KnownModules.First(func);
 
             findModTask.Value = findModTask.MaxValue;
-            loadingModule.Load(destination, thCount, credContext, argD, progCtx);
+            loadingModule.Load(options, credContext, progCtx);
         }
 
         public static void ReportSuccess(string dest, Credential cred, string loginName = "login", string passName = "password")

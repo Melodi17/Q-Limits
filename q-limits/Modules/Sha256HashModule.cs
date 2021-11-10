@@ -16,20 +16,19 @@ namespace q_limits.Modules
         {
             Name = "SHA256 Hash";
             ID = "sha256-hash";
-            Help = "NONONO";
         }
-        public override void Load(string dest, int thCount, CredentialContext credContext, Dictionary<string, string> argD, ProgressContext progCtx)
+        public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {
-            if (!File.Exists(dest))
+            if (!File.Exists(options.Destination))
             {
-                AnsiConsole.MarkupLine("[red]Destination file does not exist[/]");
+                AnsiConsole.MarkupLine("[red]options.Destinationination file does not exist[/]");
                 return;
             }
 
             var buildTask = progCtx.AddTask("[gray][[Module]][/] Building list into mem", true, credContext.Combinations);
             List<Credential> possibilities = new();
 
-            foreach (var hash in File.ReadAllLines(dest))
+            foreach (var hash in File.ReadAllLines(options.Destination))
             {
                 foreach (var password in credContext.Passwords)
                 {
@@ -40,13 +39,13 @@ namespace q_limits.Modules
 
             buildTask.Value = buildTask.MaxValue;
             var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities.Count);
-            ParallelExecutor.ForEachAsync(thCount, possibilities, x => 
+            ParallelExecutor.ForEachAsync(options.MaxThreadCount, possibilities, x => 
             {
                 try
                 {
                     if (x.Key.ToLower() == ComputeSha256Hash(x.Value).ToLower())
                     {
-                        ModuleService.ReportSuccess(dest, x, "hash", "value");
+                        ModuleService.ReportSuccess(options.Destination, x, "hash", "value");
                     }
                 }
                 catch (Exception) { /* Don't Care */ }

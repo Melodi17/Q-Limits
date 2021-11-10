@@ -15,17 +15,16 @@ namespace q_limits.Modules
         {
             Name = "Http Get Form";
             ID = "http-get-form";
-            Help = "NONONO";
         }
-        public override void Load(string dest, int thCount, CredentialContext credContext, Dictionary<string, string> argD, ProgressContext progCtx)
+        public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {
             WebProxy proxy = null;
             if (ProxyManager.ProxyRequired)
             {
                 AnsiConsole.MarkupLine("[gray]Proxy detected[/]");
-                if (argD.ContainsKey("n"))
+                if (options.Proxy != null)
                 {
-                    string[] splt = argD["n"].Split(":", 2);
+                    string[] splt = options.Proxy.Split(":", 2);
                     string username = splt[0];
                     string password = splt.Length > 1 ? splt[1] : "";
 
@@ -67,26 +66,26 @@ namespace q_limits.Modules
 
             buildTask.Value = buildTask.MaxValue;
             var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities.Count);
-            ParallelExecutor.ForEachAsync(thCount, possibilities, x => 
+            ParallelExecutor.ForEachAsync(options.MaxThreadCount, possibilities, x => 
             {
                 try
                 {
                     WebClient web = new();
                     web.Proxy = proxy;
 
-                    string cont = web.DownloadString(argD["d"].Replace("{LOGIN}", x.Key).Replace("{PASSWORD}", x.Value));
+                    string cont = web.DownloadString(options.Destination.Replace("{LOGIN}", x.Key).Replace("{PASSWORD}", x.Value));
                     bool contPassed = true;
 
-                    if (argD.ContainsKey("s"))
+                    if (options.SuccessCritera != null)
                     {
-                        if (cont.Contains(argD["s"]))
+                        if (cont.Contains(options.SuccessCritera))
                         {
                             contPassed = true;
                         }
                     }
-                    if (argD.ContainsKey("f"))
+                    if (options.FailCritera != null)
                     {
-                        if (cont.Contains(argD["f"]))
+                        if (cont.Contains(options.FailCritera))
                         {
                             contPassed = false;
                         }
@@ -94,7 +93,7 @@ namespace q_limits.Modules
 
                     if (contPassed)
                     {
-                        ModuleService.ReportSuccess(dest, x);
+                        ModuleService.ReportSuccess(options.Destination, x);
                     }
                 }
                 catch (Exception) { /* Don't Care */ }

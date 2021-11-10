@@ -14,12 +14,11 @@ namespace q_limits.Modules
         {
             Name = "Http Proxy";
             ID = "http-proxy";
-            Help = "NONONO";
         }
-        public override void Load(string dest, int thCount, CredentialContext credContext, Dictionary<string, string> argD, ProgressContext progCtx)
+        public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {
             var det = WebRequest.GetSystemWebProxy();
-            Uri proxyurl = det.GetProxy(new Uri(dest));
+            Uri proxyurl = det.GetProxy(new Uri(options.Destination));
 
             if (proxyurl == null)
             {
@@ -41,19 +40,19 @@ namespace q_limits.Modules
 
             buildTask.Value = buildTask.MaxValue;
             var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities.Count);
-            ParallelExecutor.ForEachAsync(thCount, possibilities, x => 
+            ParallelExecutor.ForEachAsync(options.MaxThreadCount, possibilities, x => 
             {
                 try
                 {
                     WebProxy webProxy = new(proxyurl, true);
                     webProxy.Credentials = new NetworkCredential(x.Key, x.Value);
 
-                    WebRequest web = WebRequest.Create(dest);
+                    WebRequest web = WebRequest.Create(options.Destination);
                     web.Proxy = webProxy;
 
                     web.GetResponse();
 
-                    ModuleService.ReportSuccess(dest, x);
+                    ModuleService.ReportSuccess(options.Destination, x);
                 }
                 catch (Exception) { /* Don't Care */ }
 

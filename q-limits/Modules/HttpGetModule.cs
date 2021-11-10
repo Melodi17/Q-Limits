@@ -45,17 +45,16 @@ namespace q_limits.Modules
         {
             Name = "Http Get";
             ID = "http-get";
-            Help = "NONONO";
         }
-        public override void Load(string dest, int thCount, CredentialContext credContext, Dictionary<string, string> argD, ProgressContext progCtx)
+        public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {
             WebProxy proxy = null;
             if (ProxyManager.ProxyRequired)
             {
                 AnsiConsole.MarkupLine("[gray]Proxy detected[/]");
-                if (argD.ContainsKey("n"))
+                if (options.Proxy != null)
                 {
-                    string[] splt = argD["n"].Split(":", 2);
+                    string[] splt = options.Proxy.Split(":", 2);
                     string username = splt[0];
                     string password = splt.Length > 1 ? splt[1] : "";
 
@@ -97,11 +96,11 @@ namespace q_limits.Modules
 
             buildTask.Value = buildTask.MaxValue;
             var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities.Count);
-            ParallelExecutor.ForEachAsync(thCount, possibilities, x => 
+            ParallelExecutor.ForEachAsync(options.MaxThreadCount, possibilities, x => 
             {
                 try
                 {
-                    WebRequest web = WebRequest.Create(argD["d"]);
+                    WebRequest web = WebRequest.Create(options.Destination);
                     web.Proxy = proxy;
 
                     string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(x.Key + ":" + x.Value));
@@ -111,7 +110,7 @@ namespace q_limits.Modules
 
                     web.GetResponse();
 
-                    ModuleService.ReportSuccess(dest, x);
+                    ModuleService.ReportSuccess(options.Destination, x);
                 }
                 catch (Exception e) 
                 {
@@ -119,7 +118,7 @@ namespace q_limits.Modules
 
                     if (authGood.Any(y => e.Message.Contains("(" + y + ")")))
                     {
-                        ModuleService.ReportSuccess(dest, x);
+                        ModuleService.ReportSuccess(options.Destination, x);
                     }
                 }
 

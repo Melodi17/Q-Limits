@@ -15,17 +15,16 @@ namespace q_limits.Modules
         {
             Name = "FTP";
             ID = "ftp";
-            Help = "NONONO";
         }
-        public override void Load(string dest, int thCount, CredentialContext credContext, Dictionary<string, string> argD, ProgressContext progCtx)
+        public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {
             WebProxy proxy = null;
             if (ProxyManager.ProxyRequired)
             {
                 AnsiConsole.MarkupLine("[gray]Proxy detected[/]");
-                if (argD.ContainsKey("n"))
+                if (options.Proxy != null)
                 {
-                    string[] splt = argD["n"].Split(":", 2);
+                    string[] splt = options.Proxy.Split(":", 2);
                     string username = splt[0];
                     string password = splt.Length > 1 ? splt[1] : "";
 
@@ -67,11 +66,11 @@ namespace q_limits.Modules
 
             buildTask.Value = buildTask.MaxValue;
             var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities.Count);
-            ParallelExecutor.ForEachAsync(thCount, possibilities, x => 
+            ParallelExecutor.ForEachAsync(options.MaxThreadCount, possibilities, x => 
             {
                 try
                 {
-                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(dest);
+                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(options.Destination);
                     request.Proxy = proxy;
                     request.Credentials = new NetworkCredential(x.Key, x.Value);
                     request.Method = WebRequestMethods.Ftp.DownloadFile;
@@ -79,7 +78,7 @@ namespace q_limits.Modules
                     FtpWebResponse response = (FtpWebResponse)request.GetResponse();
                     response.Close();
 
-                    ModuleService.ReportSuccess(dest, x);
+                    ModuleService.ReportSuccess(options.Destination, x);
                 }
                 catch (Exception) { /* Don't Care */ }
 

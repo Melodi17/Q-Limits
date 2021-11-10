@@ -15,9 +15,8 @@ namespace q_limits.Modules
         {
             Name = "SSH";
             ID = "ssh";
-            Help = "NONONO";
         }
-        public override void Load(string dest, int thCount, CredentialContext credContext, Dictionary<string, string> argD, ProgressContext progCtx)
+        public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {
             var buildTask = progCtx.AddTask("[gray][[Module]][/] Building list into mem", true, credContext.Combinations);
             List<Credential> possibilities = new();
@@ -33,14 +32,14 @@ namespace q_limits.Modules
 
             buildTask.Value = buildTask.MaxValue;
             var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities.Count);
-            ParallelExecutor.ForEachAsync(thCount, possibilities, x => 
+            ParallelExecutor.ForEachAsync(options.MaxThreadCount, possibilities, x => 
             {
                 try
                 {
-                    SshClient cSSH = new(dest, 22, x.Key, x.Value);
+                    SshClient cSSH = new(options.Destination, 22, x.Key, x.Value);
                     cSSH.Connect();
                     cSSH.Disconnect();
-                    ModuleService.ReportSuccess(dest, x);
+                    ModuleService.ReportSuccess(options.Destination, x);
                 }
                 catch (Exception) { /* Don't Care */ }
 

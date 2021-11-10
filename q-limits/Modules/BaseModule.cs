@@ -11,8 +11,7 @@ namespace q_limits.Modules
     {
         public string Name;
         public string ID;
-        public string Help;
 
-        public abstract void Load(string dest, int thCount, CredentialContext credContext, Dictionary<string, string> argD, ProgressContext progCtx);
+        public abstract void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx);
     }
 }

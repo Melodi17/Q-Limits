@@ -47,7 +47,7 @@ Password file/Key file (-P) is used to append the file content to the list of pa
 
 **-t *max_thread_count***
 
-Max thread count/Thread count (-t) is used to limit the amount of threads the program can use for breaking the limits. When the parameter is not included the default value will be set to 100. The '*max_thread_count*' parameter is a integer.
+Max thread count/Thread count (-t) is used to limit the amount of threads the program can use for breaking limits. When the parameter is not included the default value will be set to 100. The '*max_thread_count*' parameter is a integer.
 
 **-n *proxy_username*:*proxy_password***
 

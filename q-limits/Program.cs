@@ -4,59 +4,52 @@ using Melodi.IO;
 using System.Threading;
 using System.Collections.Generic;
 using System.Net;
+using CommandLine;
 
 namespace q_limits
 {
     class Program
     {
         static DateTime startTime;
-        static string Version = "2.0.4"; // TODO: Remember to update the version all the time
+        static string Version = "2.0.5";
+
         static void Main(string[] args)
         {
-            Console.CancelKeyPress += (_, _) =>
-            {
-                ShowStatistics();
-                // TODO: Make the statistics bar appear after progressbar somehow
-            };
+            _ = Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed(ExecuteEngine)
+                .WithNotParsed(errs =>
+                {
+                    if (!(errs.IsHelp() || errs.IsVersion()))
+                    {
+                        AnsiConsole.MarkupLine("[red]Insufficient/Invalid parameters are supplied, type 'q-limits --help' for help[/]");
+                    }
+                });
+        }
 
-                startTime = DateTime.Now;
+        static void ExecuteEngine(CommandLineOptions options)
+        {
+            startTime = DateTime.Now;
             AnsiConsole.MarkupLine($"Q-Limits [[Version [blue]{Version}[/]]]");
             AnsiConsole.MarkupLine("Made by [blue]Melodi[/] and [blue]Github[/]");
             AnsiConsole.MarkupLine($"Started at [blue]{startTime}[/]");
             AnsiConsole.Write(new Rule().Centered());
 
-            Thread.Sleep(500);
+            Thread.Sleep(250);
 
-            Dictionary<string, string> argD = ArgumentParser.ParseString(string.Join(" ", args));
-            if (argD.Count == 0)
-            {
-                AnsiConsole.MarkupLine("[red]Parameters are required, type 'q-limits -h' or help[/]");
-            }
-            else if (argD.ContainsKey("h"))
-            {
-                // TODO: Write help menu (base off README.md)
-            }
-            else if (argD.ContainsKey("m") && argD.ContainsKey("d"))
-            {
-                AnsiConsole.Progress()
-                    .AutoRefresh(true) // Turn on auto refresh
-                    .AutoClear(false)   // Do not remove the task list when done
-                    .HideCompleted(false)   // Hide tasks as they are completed
-                    .Columns(new ProgressColumn[]
-                    {
-                        new TaskDescriptionColumn(),    // Task description
-                        new ProgressBarColumn {CompletedStyle = new(Color.Orange1)},        // Progress bar
-                        new PercentageColumn(),         // Percentage
-                        new RemainingTimeColumn(),      // Remaining time
-                        new SpinnerColumn { Style = new(Color.Blue)},            // Spinner
-                    }).Start(ctx => ModuleService.FindAssessLoadModule(ctx, argD));
+            AnsiConsole.Progress()
+                .AutoRefresh(true) // Turn on auto refresh
+                .AutoClear(false) // Do not remove the task list when done
+                .HideCompleted(false) // Hide tasks as they are completed
+                .Columns(new ProgressColumn[]
+                {
+                    new TaskDescriptionColumn(), // Task description
+                    new ProgressBarColumn {CompletedStyle = new(Color.Orange1)}, // Progress bar
+                    new PercentageColumn(), // Percentage
+                    new RemainingTimeColumn(), // Remaining time
+                    new SpinnerColumn {Style = new(Color.Blue)}, // Spinner
+                }).Start(ctx => ModuleService.FindAssessLoadModule(ctx, options));
 
-                ShowStatistics();
-            }
-            else
-            {
-                AnsiConsole.MarkupLine("[red]Insufficient parameters are supplied, type 'q-limits -h' for help[/]");
-            }
+            ShowStatistics();
         }
 
         static void ShowStatistics()
