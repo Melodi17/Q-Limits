@@ -36,6 +36,11 @@ namespace q_limits
             CredentialContext credContext = new();
             List<string> usernames = new();
             List<string> passwords = new();
+
+            if (options.MaxThreadCount > 1)
+            {
+                options.MaxThreadCount = 100;
+            }
             
             if (options.Login != null)
             {

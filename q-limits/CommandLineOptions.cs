@@ -22,7 +22,7 @@ namespace q_limits
         [Option('P', "password_file", Required = false, HelpText = "Password file is used to append the file content to the list of passwords to try")]
         public string PasswordFile { get; set; }
         
-        [Option('t', "max_thread_count", Required = false, HelpText = "Max thread count is used to limit the amount of threads the program can use for breaking limits")]
+        [Option('t', "max_thread_count", Required = false, Default = 100, HelpText = "Max thread count is used to limit the amount of threads the program can use for breaking limits")]
         public int MaxThreadCount { get; set; }
         
         [Option('n', "proxy_authentication", Required = false, HelpText = "Proxy authentication is used to set a proxy that certain protocols require if you are on a network and are requiring proxy authentication")]
