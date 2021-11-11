@@ -27,14 +27,15 @@ namespace q_limits
             object lockObject = new object();
             var exceptions = new List<Exception>();
             var tasks = new Task[enumerable.Count()];
-            int i = 0;
+            int i = -1;
 
             try
             {
                 foreach (var t in enumerable)
                 {
                     await semaphore.WaitAsync(cancellationToken);
-                    tasks[i++] = Task.Run(
+                    int myIdx = Interlocked.Increment(ref i);
+                    tasks[myIdx] = Task.Run(
                         async () =>
                         {
                             try
@@ -71,6 +72,7 @@ namespace q_limits
                 exceptions.Add(e);
             }
 
+
             foreach (var t in tasks)
             {
                 if (cancellationToken.IsCancellationRequested)
@@ -98,4 +100,5 @@ namespace q_limits
             }
         }
     }
+
 }
