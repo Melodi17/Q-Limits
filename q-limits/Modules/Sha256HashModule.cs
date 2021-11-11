@@ -21,7 +21,7 @@ namespace q_limits.Modules
         {
             if (!File.Exists(options.Destination))
             {
-                AnsiConsole.MarkupLine("[red]options.Destinationination file does not exist[/]");
+                AnsiConsole.MarkupLine("[red]Destination file does not exist[/]");
                 return;
             }
 
