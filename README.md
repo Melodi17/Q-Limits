@@ -86,6 +86,8 @@ q-limits -m http-get-form -d localhost:8080/login:user={LOGIN}&pass={PASSWORD} -
 
 ### Change Log
 
+
+- **[Version 2.0.6]** Patched max_thread_count defaulting to 0 and raising an exception
 - **[Version 2.0.6]** Fixed ParallelExecutor race condition https://github.com/Melodi17/Q-Limits/issues/1
 - **[Version 2.0.5]** Finished usage part of README.md (-s success_criteria and -f fail criteria)
 - **[Version 2.0.5]** Examples in README.md now has content
