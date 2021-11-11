@@ -1,4 +1,7 @@
 # Q-Limits
+
+**Version 2.0.6**
+
 ### Overview
 The perfect tool for breaking limits, this is a login-cracking utility based off Hydra.
 
@@ -83,6 +86,7 @@ q-limits -m http-get-form -d localhost:8080/login:user={LOGIN}&pass={PASSWORD} -
 
 ### Change Log
 
+- **[Version 2.0.6]** Fixed ParallelExecutor race condition https://github.com/Melodi17/Q-Limits/issues/1
 - **[Version 2.0.5]** Finished usage part of README.md (-s success_criteria and -f fail criteria)
 - **[Version 2.0.5]** Examples in README.md now has content
 - **[Version 2.0.4]** Implemented a proper command line parser (https://github.com/commandlineparser/commandline), in order to make the code more reliable and 'clean'. Fixing: https://github.com/Melodi17/Q-Limits/issues/2
