@@ -3,8 +3,10 @@ using Spectre.Console;
 using Melodi.IO;
 using System.Threading;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using CommandLine;
+using q_limits.Modules;
 
 namespace q_limits
 {
@@ -34,6 +36,13 @@ namespace q_limits
 
         static void ExecuteEngine(CommandLineOptions options)
         {
+            /*string[] lns = File.ReadAllLines(options.PasswordFile);
+            File.WriteAllText(options.Destination, "");
+            for (int i = 0; i < 100; i++)
+            {
+                File.AppendAllText(options.Destination, $"{Sha256HashModule.ComputeSha256Hash(lns[new Random().Next(lns.Length)])}\n");
+            }
+            return;*/
             AnsiConsole.MarkupLine($"Q-Limits [[Version [blue]{Version}[/]]]");
             AnsiConsole.MarkupLine("Made by [blue]Melodi[/] and [blue]Github[/]");
             AnsiConsole.MarkupLine($"Started at [blue]{StartTime}[/]");

@@ -45,7 +45,7 @@ namespace q_limits.Modules
                 {
                     if (x.Key.ToLower() == ComputeMD5Hash(x.Value).ToLower())
                     {
-                        ModuleService.ReportSuccess(options.Destination, x, "hash", "value");
+                        ModuleService.ReportSuccess(Path.GetFileName(options.Destination), x, "hash", "value");
                     }
                 }
                 catch (Exception) { /* Don't Care */ }

@@ -50,7 +50,21 @@ namespace q_limits
             {
                 if (File.Exists(options.LoginFile))
                 {
-                    usernames.AddRange(File.ReadAllLines(options.LoginFile));
+                    var fileTask = progCtx.AddTask($"[gray][[Service]][/] Reading file {Path.GetFileName(options.LoginFile)}");
+                    fileTask.MaxValue = 100;
+                    fileTask.IsIndeterminate = true;
+                    string line;
+                    using (StreamReader file = new(options.LoginFile))
+                    {
+                        while ((line = file.ReadLine()) != null)
+                        {    
+                            usernames.Add(line);
+                            if ((int) fileTask.MaxValue == (int) fileTask.Value) fileTask.MaxValue *= 2;
+                            fileTask.Increment(1);
+                        }
+                    }
+
+                    fileTask.Value = fileTask.MaxValue;
                 }
                 else
                 {
@@ -65,8 +79,21 @@ namespace q_limits
             {
                 if (File.Exists(options.PasswordFile))
                 {
-                    string[] flCont = File.ReadAllLines(options.PasswordFile);
-                    passwords.AddRange(flCont);
+                    var fileTask = progCtx.AddTask($"[gray][[Service]][/] Reading file {Path.GetFileName(options.PasswordFile)}");
+                    fileTask.MaxValue = 100;
+                    fileTask.IsIndeterminate = true;
+                    string line;
+                    using (StreamReader file = new(options.PasswordFile))
+                    {
+                        while ((line = file.ReadLine()) != null)
+                        {    
+                            passwords.Add(line);
+                            if ((int) fileTask.MaxValue == (int) fileTask.Value) fileTask.MaxValue *= 2;
+                            fileTask.Increment(1);
+                        }
+                    }
+
+                    fileTask.Value = fileTask.MaxValue;
                 }
                 else
                 {
