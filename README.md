@@ -53,12 +53,38 @@ Max thread count/Thread count (-t) is used to limit the amount of threads the pr
 
 Proxy authentication (-n) is used to set a proxy that certain protocols require if you are on a network and are requiring proxy authentication. It is only required if proxy authentication is necessary. The '*proxy_username*' parameter is a string and should be the username credentials for the proxy. The '*proxy_password*' parameter is a string and should be the password credentials for the proxy.
 
+**-s *success_criteria***
+
+Success criteria (-s) is used to set what defines a success in some modules (currently just http-get-form). The '*success_criteria*' parameter is a string.
+
+**-f *fail_criteria***
+
+Fail criteria (-f) is used to set what defines a failure in some modules (currently just http-get-form). The '*fail_criteria*' parameter is a string.
+
 #### Examples
 
+The following command will test login: 'root' and password: 'password' on the website 'localhost:8080/login' using the 'http-get' protocol
 
+```shell
+q-limits -m http-get -d localhost:8080/login -l root -p password
+```
+
+This will attempt to crack the supplied SHA256 hashes in the file 'hashes.txt' with the values in the password list from the file 'englishWordlist.txt'
+
+```shell
+q-limits -m sha256-hash -d hashes.txt -P englishWordlist.txt
+```
+
+This will attempt to solve login form at 'localhost:8080/login' by running through possible combinations and substituting '{LOGIN}' for the current login and the '{PASSWORD}' for the current password and checking if the content does not contain the fail criteria (-f) 'Incorrect', while using the specified proxy authentication.
+
+```shell
+q-limits -m http-get-form -d localhost:8080/login:user={LOGIN}&pass={PASSWORD} -l admin -P mostCommonPasswords.txt -f Incorrect -n myuser:mypass
+```
 
 ### Change Log
 
+- **[Version 2.0.5]** Finished usage part of README.md (-s success_criteria and -f fail criteria)
+- **[Version 2.0.5]** Examples in README.md now has content
 - **[Version 2.0.4]** Implemented a proper command line parser (https://github.com/commandlineparser/commandline), in order to make the code more reliable and 'clean'. Fixing: https://github.com/Melodi17/Q-Limits/issues/2
 - **[Version 2.0.4]** Progress bar spinner now is blue
 - **[Version 2.0.4]** Implemented write output instead of throwing an error when the specified module is not found
@@ -71,5 +97,5 @@ Proxy authentication (-n) is used to set a proxy that certain protocols require 
 
 - [ ] Get password generation parameter (-x) working
 - [ ] Add POP3 protocol
-- [ ] Add Telnet protocol
-- [ ] Finish usage part of README.md (-s success_criteria and -f fail criteria)
+- [ ] Add http-post protocol
+- [ ] Add http-form-post protocol
