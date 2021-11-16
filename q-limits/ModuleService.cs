@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace q_limits
 {
@@ -13,7 +11,7 @@ namespace q_limits
     {
         public static List<IModule> KnownModules;
         public static List<Credential> KnownSuccessfulCredentials;
-        
+
         static ModuleService()
         {
             KnownModules = new();
@@ -41,7 +39,7 @@ namespace q_limits
             {
                 options.MaxThreadCount = 100;
             }
-            
+
             if (options.Login != null)
             {
                 usernames.Add(options.Login);
@@ -57,9 +55,9 @@ namespace q_limits
                     using (StreamReader file = new(options.LoginFile))
                     {
                         while ((line = file.ReadLine()) != null)
-                        {    
+                        {
                             usernames.Add(line);
-                            if ((int) fileTask.MaxValue == (int) fileTask.Value) fileTask.MaxValue *= 2;
+                            if ((int)fileTask.MaxValue == (int)fileTask.Value) fileTask.MaxValue *= 2;
                             fileTask.Increment(1);
                         }
                     }
@@ -86,9 +84,9 @@ namespace q_limits
                     using (StreamReader file = new(options.PasswordFile))
                     {
                         while ((line = file.ReadLine()) != null)
-                        {    
+                        {
                             passwords.Add(line);
-                            if ((int) fileTask.MaxValue == (int) fileTask.Value) fileTask.MaxValue *= 2;
+                            if ((int)fileTask.MaxValue == (int)fileTask.Value) fileTask.MaxValue *= 2;
                             fileTask.Increment(1);
                         }
                     }
@@ -100,50 +98,63 @@ namespace q_limits
                     AnsiConsole.MarkupLine($"[red]File '{options.PasswordFile}' was not found[/]");
                 }
             }
-            /*if (false)
+            if (options.PasswordGeneration != null)
             {
-                string[] splt = argD["x"].Split(":");
+                string[] splt = options.PasswordGeneration.Split(":");
                 if (splt.Length == 3)
                 {
-                    try
-                    {
-                        int min = int.Parse(splt[0]);
-                        int max = int.Parse(splt[1]);
-                        bool lowercase = splt[2].Contains("a");
-                        bool uppercase = splt[2].Contains("A");
-                        bool numbers = splt[2].Contains("1");
-                        bool symbols = splt[2].Contains("!");
+                    //try
+                    //{
+                    int min = int.Parse(splt[0]);
+                    int max = int.Parse(splt[1]);
+                    bool lowercase = splt[2].Contains("a");
+                    bool uppercase = splt[2].Contains("A");
+                    bool numbers = splt[2].Contains("1");
+                    bool symbols = splt[2].Contains("!");
 
-                        string possiblechars = "";
-                        if (lowercase)
-                        {
-                            possiblechars += "abcdefghijklmnopqrstuvwxyz";
-                        }
-                        if (uppercase)
-                        {
-                            possiblechars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                        }
-                        if (numbers)
-                        {
-                            possiblechars += "0123456789";
-                        }
-                        if (symbols)
-                        {
-                            possiblechars += "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?~`";
-                        }
-                        
-                        // TODO: Generate every possible combination with a progressbar and add it to 'passwords'
-                    }
-                    catch (Exception)
+                    string possiblechars = "";
+                    if (lowercase)
                     {
-                        AnsiConsole.MarkupLine("[red]Generation (x) parameter failed[/]");
+                        possiblechars += "abcdefghijklmnopqrstuvwxyz";
                     }
+                    if (uppercase)
+                    {
+                        possiblechars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    }
+                    if (numbers)
+                    {
+                        possiblechars += "0123456789";
+                    }
+                    if (symbols)
+                    {
+                        possiblechars += "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?~`";
+                    }
+
+                    if (options.PasswordGenerationXCharset != null)
+                    {
+                        foreach (char ch in options.PasswordGenerationXCharset)
+                        {
+                            if (!possiblechars.Contains(ch)) possiblechars += ch;
+                        }
+                    }
+
+                    // TODO: Generate every possible combination with a progressbar and add it to 'passwords'
+                    var genTask = progCtx.AddTask("Implementing charset", true, 100);
+                    genTask.IsIndeterminate = true;
+                    Dive(ref passwords, "", 0, possiblechars, min, max);
+                    genTask.Value = genTask.MaxValue;
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    AnsiConsole.MarkupLine("[red]Generation (x) parameter failed[/]");
+                    //    AnsiConsole.MarkupLine($"[gray]{e.Message}[/]");
+                    //}
                 }
                 else
                 {
                     AnsiConsole.MarkupLine("[red]Generation (x) parameter requires 3 chunks such as: '1:3:aA1!'[/]");
                 }
-            }*/ // TODO: Finish dive algorithm
+            } // TODO: Finish dive algorithm
 
             credContext.Usernames = usernames.ToArray();
             credContext.Passwords = passwords.ToArray();
@@ -171,6 +182,23 @@ namespace q_limits
         {
             KnownSuccessfulCredentials.Add(cred);
             AnsiConsole.MarkupLine($"[[[blue underline]{DateTime.Now}[/]]] Credentials retrieved for [blue]{dest}[/] > {loginName}: {(cred.Key != null ? $"[green]{cred.Key}[/]" : "[red]NULL[/]")}  {passName}: {(cred.Value != null ? $"[green]{cred.Value}[/]" : "[red]NULL[/]")}");
+        }
+
+        public static void Dive(ref List<string> arr, string prefix, int level, string validchars, int min, int max)
+        {
+            level += 1;
+            foreach (char c in validchars)
+            {
+                string res = prefix + c;
+                if (res.Length >= min && res.Length <= max)
+                {
+                    arr.Add(res);
+                }
+                if (level < max)
+                {
+                    Dive(ref arr, prefix + c, level, validchars, min, max);
+                }
+            }
         }
     }
 }

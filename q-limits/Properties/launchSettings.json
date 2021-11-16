@@ -2,7 +2,7 @@
   "profiles": {
     "q-limits": {
       "commandName": "Project",
-      "commandLineArgs": "-m http-get -d \"https://games.samsclass.info/basic1\" -L \"C:\\Users\\melod\\Documents\\Code\\Pentesting\\username.txt\" -P \"C:\\Users\\melod\\Documents\\Code\\Pentesting\\3digPin.txt\" -n afair37:Smartboy247"
+      "commandLineArgs": "-m sha256-hash -d C:\\Users\\melod\\Documents\\Code\\Pentesting\\hashes\\brokenthunder11_hashes.txt -x 1:1:aA1 -X @"
     }
   }
 }

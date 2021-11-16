@@ -22,6 +22,12 @@ namespace q_limits
         [Option('P', "password_file", Required = false, HelpText = "Password file is used to append the file content to the list of passwords to try")]
         public string PasswordFile { get; set; }
         
+        [Option('x', "password_generation", Required = false, HelpText = "Password generation is used to append the file content to the list of passwords to try")]
+        public string PasswordGeneration { get; set; }
+
+        [Option('X', "password_generation_extra_charset", Required = false, HelpText = "Password generation extra charsets are added to password generation is used to append the file content to the list of passwords to try")]
+        public string PasswordGenerationXCharset { get; set; }
+        
         [Option('t', "max_thread_count", Required = false, Default = 100, HelpText = "Max thread count is used to limit the amount of threads the program can use for breaking limits")]
         public int MaxThreadCount { get; set; }
         

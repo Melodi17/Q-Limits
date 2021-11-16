@@ -26,26 +26,25 @@ namespace q_limits.Modules
             }
 
             var buildTask = progCtx.AddTask("[gray][[Module]][/] Building list into mem", true, credContext.Combinations);
-            List<Credential> possibilities = new();
-
-            foreach (var hash in File.ReadAllLines(options.Destination))
-            {
-                foreach (var password in credContext.Passwords)
-                {
-                    possibilities.Add(new(hash, password));
-                    buildTask.Increment(1);
-                }
-            }
-
+            List<string> hashes = File.ReadAllLines(options.Destination).ToList();
+            int possibilities = credContext.Passwords.Length;
+            
             buildTask.Value = buildTask.MaxValue;
-            var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities.Count);
-            ParallelExecutor.ForEachAsync(options.MaxThreadCount, possibilities, x => 
+            var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities);
+            ParallelExecutor.ForEachAsync(options.MaxThreadCount, credContext.Passwords, x => 
             {
                 try
                 {
-                    if (x.Key.ToLower() == ComputeSha256Hash(x.Value).ToLower())
+                    foreach (string hash in hashes.ToArray())
                     {
-                        ModuleService.ReportSuccess(Path.GetFileName(options.Destination), x, "hash", "value");
+                        if (hash.ToLower() == ComputeSha256Hash(x).ToLower())
+                        {
+                            ModuleService.ReportSuccess(Path.GetFileName(options.Destination), new(hash, x), "hash", "value");
+                            lock (hashes)
+                            {
+                                hashes.Remove(hash);
+                            }
+                        }   
                     }
                 }
                 catch (Exception) { /* Don't Care */ }
