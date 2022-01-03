@@ -87,7 +87,7 @@ q-limits -m http-get-form -d localhost:8080/login:user={LOGIN}&pass={PASSWORD} -
 ### Change Log
 
 
-- **[Version 2.0.7]** Created dynamic module management (automatically adds modules in assembly)
+- **[Version 2.0.7]** Created dynamic module management (automatically loads modules in assembly)
 - **[Version 2.0.7]** Started working on module pop3
 - **[Version 2.0.7]** Created parameter destination_port
 - **[Version 2.0.7]** Optimized SHA256-Hash Module and MD5-Hash Module, and increasing performance
