@@ -1,6 +1,6 @@
 # Q-Limits
 
-**Version 2.0.6**
+**Version 2.0.6*7
 
 ### Overview
 The perfect tool for breaking limits, this is a login-cracking utility based off Hydra.
@@ -58,11 +58,11 @@ Proxy authentication (-n) is used to set a proxy that certain protocols require 
 
 **-s *success_criteria***
 
-Success criteria (-s) is used to set what defines a success in some modules (currently just http-get-form). The '*success_criteria*' parameter is a string.
+Success criteria (-s) is used to set what defines a success in some modules. The '*success_criteria*' parameter is a string.
 
 **-f *fail_criteria***
 
-Fail criteria (-f) is used to set what defines a failure in some modules (currently just http-get-form). The '*fail_criteria*' parameter is a string.
+Fail criteria (-f) is used to set what defines a failure in some modules. The '*fail_criteria*' parameter is a string.
 
 #### Examples
 
@@ -87,6 +87,10 @@ q-limits -m http-get-form -d localhost:8080/login:user={LOGIN}&pass={PASSWORD} -
 ### Change Log
 
 
+- **[Version 2.0.7]** Created dynamic module management (automatically adds modules in assembly)
+- **[Version 2.0.7]** Started working on module pop3
+- **[Version 2.0.7]** Created parameter destination_port
+- **[Version 2.0.7]** Optimized SHA256-Hash Module and MD5-Hash Module, and increasing performance
 - **[Version 2.0.6]** Patched max_thread_count defaulting to 0 and raising an exception
 - **[Version 2.0.6]** Fixed ParallelExecutor race condition https://github.com/Melodi17/Q-Limits/issues/1
 - **[Version 2.0.5]** Finished usage part of README.md (-s success_criteria and -f fail criteria)
@@ -102,6 +106,5 @@ q-limits -m http-get-form -d localhost:8080/login:user={LOGIN}&pass={PASSWORD} -
 ### To Do
 
 - [ ] Get password generation parameter (-x) working
-- [ ] Add POP3 protocol
 - [ ] Add http-post protocol
 - [ ] Add http-form-post protocol

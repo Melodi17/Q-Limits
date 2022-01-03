@@ -9,7 +9,10 @@ namespace q_limits
 
         [Option('d', "destination", Required = true, HelpText = "Destination is used to set the device that it targets during execution")]
         public string Destination { get; set; }
-        
+
+        [Option('D', "destination_port", Required = false, HelpText = "", Default = -1)] // TODO: Write help text
+        public int DestinationPort { get; set; }
+
         [Option('l', "login", Required = false, HelpText = "Login is used to append an item to a list of usernames to try")]
         public string Login { get; set; }
 
@@ -34,10 +37,10 @@ namespace q_limits
         [Option('n', "proxy_authentication", Required = false, HelpText = "Proxy authentication is used to set a proxy that certain protocols require if you are on a network and are requiring proxy authentication")]
         public string Proxy { get; set; }
         
-        [Option('s', "success_criteria", Required = false, HelpText = "")] // TODO: Write help text for this and put it in README.md
+        [Option('s', "success_criteria", Required = false, HelpText = "Success criteria is used to set what defines a success in some modules")]
         public string SuccessCritera { get; set; }
         
-        [Option('f', "fail_critera", Required = false, HelpText = "")] // TODO: Write help text for this and put it in README.md
+        [Option('f', "fail_critera", Required = false, HelpText = "Fail criteria is used to set what defines a failure in some modules")]
         public string FailCritera { get; set; }
     }
 }

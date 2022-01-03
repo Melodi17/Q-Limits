@@ -4,9 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 
 namespace q_limits
 {
+    public class ModuleExceptAttribute : Attribute { }
     public static class ModuleService
     {
         public static List<IModule> KnownModules;
@@ -17,13 +20,17 @@ namespace q_limits
             KnownModules = new();
             KnownSuccessfulCredentials = new();
 
-            KnownModules.Add(new HttpProxyModule());
-            KnownModules.Add(new Sha256HashModule());
-            KnownModules.Add(new MD5HashModule());
-            KnownModules.Add(new SSHModule());
-            KnownModules.Add(new HttpGetModule());
-            KnownModules.Add(new HttpGetFormModule());
-            KnownModules.Add(new FTPModule());
+            var type = typeof(IModule);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && p != type) /* Makes sure the type implements IModule and prevents original type (IModule) from being included */
+                .Where(x => x.GetCustomAttribute<ModuleExceptAttribute>() == null) /* Used to prevent a module from being loaded if it has the ModuleExcept attribute */
+                .Select(x =>
+                {
+                    return (IModule)Activator.CreateInstance(x);
+                });
+
+            KnownModules.AddRange(types);
         }
 
         public static void FindAssessLoadModule(ProgressContext progCtx, CommandLineOptions options)

@@ -1,4 +1,5 @@
-﻿using Renci.SshNet;
+﻿using OpenPop.Pop3;
+using Renci.SshNet;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,13 @@ using System.Threading.Tasks;
 
 namespace q_limits.Modules
 {
-    public class SSHModule : IModule
+    [ModuleExcept]
+    public class POP3Module : IModule
     {
-        public SSHModule()
+        public POP3Module()
         {
-            Name = "SSH";
-            ID = "ssh";
+            Name = "POP3";
+            ID = "pop3";
         }
         public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {
@@ -36,9 +38,11 @@ namespace q_limits.Modules
             {
                 try
                 {
-                    SshClient cSSH = new(options.Destination, options.DestinationPort < 0 ? 22 : options.DestinationPort, x.Key, x.Value);
-                    cSSH.Connect();
-                    cSSH.Disconnect();
+                    Pop3Client client = new();
+                    client.Connect(options.Destination, options.DestinationPort < 0 ? 995 : options.DestinationPort, true);
+                    // TODO: Allow user to configure ssl
+                    client.Authenticate(x.Key, x.Value);
+                    client.Disconnect();
                     ModuleService.ReportSuccess(options.Destination, x);
                 }
                 catch (Exception) { /* Don't Care */ }
