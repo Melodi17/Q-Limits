@@ -42,7 +42,7 @@ namespace q_limits
             List<string> usernames = new();
             List<string> passwords = new();
 
-            if (options.MaxThreadCount > 1)
+            if (options.MaxThreadCount < 1)
             {
                 options.MaxThreadCount = 100;
             }
