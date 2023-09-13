@@ -1,20 +1,17 @@
-﻿using Renci.SshNet;
-using Spectre.Console;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
+using Renci.SshNet;
+using Spectre.Console;
 
-namespace q_limits.Modules
+namespace q_limits.Modules.Impl
 {
-    public class SSHModule : IModule
+    public class SSHModule : Module
     {
         public SSHModule()
         {
-            Name = "SSH";
-            ID = "ssh";
+            this.Name = "SSH";
+            this.ID = "ssh";
         }
         public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {

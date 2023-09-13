@@ -1,31 +1,21 @@
-﻿using Spectre.Console;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
+using OpenPop.Pop3;
+using Spectre.Console;
 
-namespace q_limits.Modules
+namespace q_limits.Modules.Impl
 {
-    public class HttpProxyModule : IModule
+    [ModuleExcept]
+    public class POP3Module : Module
     {
-        public HttpProxyModule()
+        public POP3Module()
         {
-            Name = "Http Proxy";
-            ID = "http-proxy";
+            this.Name = "POP3";
+            this.ID = "pop3";
         }
         public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
         {
-            var det = WebRequest.GetSystemWebProxy();
-            Uri proxyurl = det.GetProxy(new Uri(options.Destination));
-
-            if (proxyurl == null)
-            {
-                AnsiConsole.MarkupLine("[red]No proxy detected[/]");
-                return;
-            }
-
             var buildTask = progCtx.AddTask("[gray][[Module]][/] Building list into mem", true, credContext.Combinations);
             List<Credential> possibilities = new();
 
@@ -44,14 +34,11 @@ namespace q_limits.Modules
             {
                 try
                 {
-                    WebProxy webProxy = new(proxyurl, true);
-                    webProxy.Credentials = new NetworkCredential(x.Key, x.Value);
-
-                    WebRequest web = WebRequest.Create(options.Destination);
-                    web.Proxy = webProxy;
-
-                    web.GetResponse();
-
+                    Pop3Client client = new();
+                    client.Connect(options.Destination, options.DestinationPort < 0 ? 995 : options.DestinationPort, true);
+                    // TODO: Allow user to configure ssl
+                    client.Authenticate(x.Key, x.Value);
+                    client.Disconnect();
                     ModuleService.ReportSuccess(options.Destination, x);
                 }
                 catch (Exception) { /* Don't Care */ }

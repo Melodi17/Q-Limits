@@ -1,22 +1,22 @@
-﻿using Spectre.Console;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Melodi.Networking;
+using q_limits.CombinationProviders;
+using q_limits.CombinationProviders.Impl;
+using Spectre.Console;
 
-namespace q_limits.Modules
+namespace q_limits.Modules.Impl
 {
-    public class HttpGetFormModule : IModule
+    public class HttpGetFormModule : Module
     {
-        public HttpGetFormModule()
-        {
-            Name = "Http Get Form";
-            ID = "http-get-form";
-        }
-        public override void Load(CommandLineOptions options, CredentialContext credContext, ProgressContext progCtx)
+        private static readonly UsernamePasswordCombinationProvider combinationProvider = new();
+        public HttpGetFormModule() : base("Http Get Form", "http-get-form") { }
+
+        public override ICombinationProvider GetCombinationProvider() => combinationProvider;
+
+        public override void Load(CommandLineOptions options, ProgressContext progCtx)
         {
             WebProxy proxy = null;
             if (ProxyManager.ProxyRequired)
@@ -51,29 +51,18 @@ namespace q_limits.Modules
                     }
                 }
             }
-
-            var buildTask = progCtx.AddTask("[gray][[Module]][/] Building list into mem", true, credContext.Combinations);
-            List<Credential> possibilities = new();
-
-            foreach (var username in credContext.Usernames)
-            {
-                foreach (var password in credContext.Passwords)
-                {
-                    possibilities.Add(new(username, password));
-                    buildTask.Increment(1);
-                }
-            }
-
-            buildTask.Value = buildTask.MaxValue;
-            var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, possibilities.Count);
-            ParallelExecutor.ForEachAsync(options.MaxThreadCount, possibilities, x => 
+            
+            int combs = combinationProvider.GetCombinationCount();
+            
+            var mainTask = progCtx.AddTask("[gray][[Module]][/] Breaking limits", true, combs);
+            ParallelExecutor.ForEachAsync(options.MaxThreadCount, combinationProvider.EnumerateCombinations(), x => 
             {
                 try
                 {
                     WebClient web = new();
                     web.Proxy = proxy;
 
-                    string cont = web.DownloadString(options.Destination.Replace("{LOGIN}", x.Key).Replace("{PASSWORD}", x.Value));
+                    string cont = web.DownloadString(options.Destination.Replace("{LOGIN}", x.Username).Replace("{PASSWORD}", x.Password));
                     bool contPassed = true;
 
                     if (options.SuccessCritera != null)
